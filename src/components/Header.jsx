@@ -3,6 +3,7 @@ import { Fragment } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { BellIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
+import { useAuth } from '@hooks/useAuth';
 
 const userData = {
   name: 'Tom Cook',

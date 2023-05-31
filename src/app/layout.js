@@ -3,6 +3,7 @@
 import { Inter } from 'next/font/google';
 import Layout from '@layout/Layout';
 import '@styles/tailwind.css';
+import { ProviderAuth } from '@hooks/useAuth';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -15,14 +16,14 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <>
-          <div className="min-h-full">
-            <Layout />
+      <ProviderAuth>
+        <Layout />
+        <div className="min-h-full">
             <main>
               <section className="max-w-7xl mx-auto py-6 sm:px-6">{children}</section>
             </main>
-          </div>
-        </>
+        </div>
+      </ProviderAuth>
       </body>
     </html>
   );
