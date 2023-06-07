@@ -5,6 +5,7 @@
       "@hooks/*": ["hooks/*"],
       "@layout/*": ["layout/*"],
       "@common/*": ["common/*"],
+      "@containers/*": ["containers/*"],
       "@components/*": ["components/*"],
       "@pages/*": ["pages/*"],
       "@services/*": ["services/*"],
