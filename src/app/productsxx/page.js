@@ -1,6 +1,6 @@
 import ProductList from '@containers/ProductList';
 
-const Products = () => {
+const Productsxx = () => {
   return(
     <>
       <ProductList />
@@ -8,4 +8,4 @@ const Products = () => {
   )
 }
 
-export default Products;
+export default Productsxx;
