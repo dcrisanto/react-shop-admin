@@ -11,11 +11,11 @@ const useInitialState = () => {
     setState({
       modalOpen: !state.modalOpen,
     })
-  }
+  };
 
   return {
     state,
-    toogleModal
+    toogleModal,
   }
 };
 

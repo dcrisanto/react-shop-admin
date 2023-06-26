@@ -1,31 +1,42 @@
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import endPoints from '@services/api';
 import { PlusIcon } from '@heroicons/react/20/solid';
-import { useState } from 'react';
 import Pagination from '@components/Pagination';
 import usePagination from '@hooks/usePagination';
-import useFetch from '@hooks/useFetch';
-import endPoints from '@services/api';
 import Modal from '@common/Modal';
+import Alert from '@common/Alert';
 import useInitialState from '@hooks/useInitialState';
 import FormProducts from '@components/FormProducts';
+import useAlert from '@hooks/useAlert';
 
-const PRODUCT_LIMIT = parseInt(process.env.NEXT_PUBLIC_PRODUCT_LIMIT);
 const PAGINATION_NUMBER_ITEMS = parseInt(process.env.NEXT_PUBLIC_PAGINATION_NUMBER_ITEMS);
 const PRODUCT_OFFSET_INITIAL = parseInt(process.env.NEXT_PUBLIC_PRODUCT_OFFSET_INITIAL);
-const endPoint = endPoints.products.getProducts(PRODUCT_LIMIT, PRODUCT_OFFSET_INITIAL);
-
-let initialProductsState = [];
 
 const ProductsPage = () => {
-  //const [open, setOpen] = useState(initialOpen);
   const { state, toogleModal } = useInitialState();
-  const [products, setProducts] = useState(initialProductsState);
-  const allProducts = useFetch(endPoint);
+  const [products, setProducts] = useState([]);
+  const { alert, toogleAlert, setAlert } = useAlert();
+  const allProducts = products;
   const totalProducts = allProducts.length;
   const updatePagination = usePagination(PAGINATION_NUMBER_ITEMS, PRODUCT_OFFSET_INITIAL, totalProducts);
-  //const products = allProducts.slice(updatePagination.currentOffset, updatePagination.currentOffset + PAGINATION_NUMBER_ITEMS);
+  //const listProducts = allProducts.slice(updatePagination.currentOffset, updatePagination.currentOffset + PAGINATION_NUMBER_ITEMS);
+
+  useEffect(() => {
+    async function getProducts() {
+      const response = await axios.get(endPoints.products.getAllProducts);
+      setProducts(response.data);
+    }
+    try {
+      getProducts();
+    } catch (error) {
+      console.log(error);
+    }
+  }, [alert]);
 
   return (
     <>
+      <Alert alert={alert} handleClose={toogleAlert} />
       <div className="lg:flex lg:items-center lg:justify-between">
         <div className="min-w-0 flex-1">
           <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">List of Products</h2>
@@ -104,19 +115,25 @@ const ProductsPage = () => {
                   ))}
                 </tbody>
               </table>
-              <Pagination
-                numberItems={PAGINATION_NUMBER_ITEMS}
-                offset={updatePagination.currentOffset}
-                totalProducts={totalProducts}
-                handlePrevious={updatePagination.handlePrevious}
-                handleNext={updatePagination.handleNext}
-              />
+              {totalProducts > 0 ? (
+                <Pagination
+                  numberItems={PAGINATION_NUMBER_ITEMS}
+                  offset={updatePagination.currentOffset}
+                  totalProducts={totalProducts}
+                  handlePrevious={updatePagination.handlePrevious}
+                  handleNext={updatePagination.handleNext}
+                />
+              ) : (
+                <section>
+                  <h2>No hay productos disponibles</h2>
+                </section>
+              )}
             </div>
           </div>
         </div>
       </div>
       <Modal open={state.modalOpen} setOpen={toogleModal}>
-        <FormProducts />
+        <FormProducts setOpenModal={toogleModal} setAlert={setAlert} />
       </Modal>
     </>
   );

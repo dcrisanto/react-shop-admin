@@ -1,9 +1,9 @@
+import useAlert from '@hooks/useAlert';
 import { addProduct } from '@services/api/products';
 import { useRef } from 'react';
 
-const FormProducts = () => {
+const FormProducts = ({ setOpenModal, setAlert }) => {
   const formRef = useRef(null);
-
   const handleSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData(formRef.current);
@@ -14,9 +14,27 @@ const FormProducts = () => {
       categoryId: parseInt(formData.get('category')),
       images: [formData.get('images').name],
     };
-    addProduct(data).then((response) => {
-      console.log(response);
-    });
+    addProduct(data)
+      .then((response) => {
+        setAlert({
+          active: true,
+          message: 'Product added successfully',
+          type: 'success',
+          autoClose: false,
+        });
+
+        setOpenModal({
+          modalOpen: false,
+        });
+      })
+      .catch((error) => {
+        setAlert({
+          active: true,
+          message: error.message,
+          type: 'error',
+          autoClose: false,
+        });
+      });
   };
 
   return (
