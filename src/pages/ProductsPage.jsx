@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { XCircleIcon } from '@heroicons/react/24/solid';
 import endPoints from '@services/api';
 import { PlusIcon } from '@heroicons/react/20/solid';
 import Pagination from '@components/Pagination';
@@ -9,6 +10,7 @@ import Alert from '@common/Alert';
 import useInitialState from '@hooks/useInitialState';
 import FormProducts from '@components/FormProducts';
 import useAlert from '@hooks/useAlert';
+import { deleteProduct } from '@services/api/products';
 
 const PAGINATION_NUMBER_ITEMS = parseInt(process.env.NEXT_PUBLIC_PAGINATION_NUMBER_ITEMS);
 const PRODUCT_OFFSET_INITIAL = parseInt(process.env.NEXT_PUBLIC_PRODUCT_OFFSET_INITIAL);
@@ -33,6 +35,26 @@ const ProductsPage = () => {
       console.log(error);
     }
   }, [alert]);
+
+  const handleDelete = (id) => {
+    deleteProduct(id)
+      .then((response) => {
+        setAlert({
+          active: true,
+          message: 'Product successfully removed',
+          type: 'error',
+          autoClose: true,
+        });
+      })
+      .catch((error) => {
+        setAlert({
+          active: true,
+          message: error.message,
+          type: 'error',
+          autoClose: true,
+        });
+      });
+  };
 
   return (
     <>
@@ -107,9 +129,7 @@ const ProductsPage = () => {
                         </a>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                          Delete
-                        </a>
+                        <XCircleIcon className="flex-shrink-0 h-6 w-6 text-gray-400 cursor-pointer" aria-hidden="true" onClick={() => handleDelete(product.id)} />
                       </td>
                     </tr>
                   ))}

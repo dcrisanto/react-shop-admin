@@ -1,4 +1,3 @@
-import useAlert from '@hooks/useAlert';
 import { addProduct } from '@services/api/products';
 import { useRef } from 'react';
 
