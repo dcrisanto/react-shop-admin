@@ -1,5 +1,8 @@
+'use client';
+
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 import { XCircleIcon } from '@heroicons/react/24/solid';
 import endPoints from '@services/api';
 import { PlusIcon } from '@heroicons/react/20/solid';
@@ -16,6 +19,7 @@ const PAGINATION_NUMBER_ITEMS = parseInt(process.env.NEXT_PUBLIC_PAGINATION_NUMB
 const PRODUCT_OFFSET_INITIAL = parseInt(process.env.NEXT_PUBLIC_PRODUCT_OFFSET_INITIAL);
 
 const ProductsPage = () => {
+  const router = useRouter();
   const { state, toogleModal } = useInitialState();
   const [products, setProducts] = useState([]);
   const { alert, toogleAlert, setAlert } = useAlert();
@@ -124,7 +128,7 @@ const ProductsPage = () => {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{product.id}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                        <a href="#" className="text-indigo-600 hover:text-indigo-900" onClick={() => router.push(`dashboard/edit/${product.id}`)}>
                           Edit
                         </a>
                       </td>
