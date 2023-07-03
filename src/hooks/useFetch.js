@@ -10,7 +10,7 @@ const useFetch = (endPoint) => {
   useEffect(() => {
     try {
       fetchData();
-    } catch(error) {
+    } catch (error) {
       console.log(error);
     }
   }, [endPoint]);

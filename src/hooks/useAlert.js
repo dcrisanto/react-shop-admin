@@ -3,9 +3,9 @@ import { useState } from 'react';
 const useAlert = (options) => {
   const defaultOptions = {
     active: false,
-    message: "",
-    type: "",
-    autoClose: true
+    message: '',
+    type: '',
+    autoClose: true,
   };
 
   const [alert, setAlert] = useState({
@@ -14,14 +14,14 @@ const useAlert = (options) => {
   });
 
   const toogleAlert = () => {
-    setAlert(!alert.active)
+    setAlert(!alert.active);
   };
 
   return {
     alert,
     setAlert,
     toogleAlert,
-  }
+  };
 };
 
 export default useAlert;

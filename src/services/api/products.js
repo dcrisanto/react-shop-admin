@@ -26,6 +26,6 @@ const updateProduct = async (id, body) => {
 const deleteProduct = async (id) => {
   const response = await axios.delete(endPoints.products.delteProduct(id));
   return response.data;
-}
+};
 
 export { addProduct, deleteProduct, updateProduct };

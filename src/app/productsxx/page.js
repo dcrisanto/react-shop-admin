@@ -1,11 +1,11 @@
 import ProductList from '@containers/ProductList';
 
 const Productsxx = () => {
-  return(
+  return (
     <>
       <ProductList />
     </>
-  )
-}
+  );
+};
 
 export default Productsxx;

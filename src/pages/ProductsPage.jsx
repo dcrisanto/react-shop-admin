@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { XCircleIcon } from '@heroicons/react/24/solid';
 import endPoints from '@services/api';
 import { PlusIcon } from '@heroicons/react/20/solid';
+import Image from 'next/image';
 import Pagination from '@components/Pagination';
 import usePagination from '@hooks/usePagination';
 import Modal from '@common/Modal';
@@ -41,7 +42,7 @@ const ProductsPage = () => {
 
   const handleDelete = (id) => {
     deleteProduct(id)
-      .then((response) => {
+      .then(() => {
         setAlert({
           active: true,
           message: 'Product successfully removed',
@@ -112,7 +113,7 @@ const ProductsPage = () => {
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">
                           <div className="flex-shrink-0 h-10 w-10">
-                            <img className="h-10 w-10 rounded-full" src={product.images[0]} alt="" />
+                            <Image className="h-10 w-10 rounded-full" src={product.images[0]} alt="" />
                           </div>
                           <div className="ml-4">
                             <div className="text-sm font-medium text-gray-900">{product.title}</div>
@@ -127,7 +128,7 @@ const ProductsPage = () => {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{product.id}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <a href="#" className="text-indigo-600 hover:text-indigo-900" onClick={() => router.push(`dashboard/edit/${product.id}`)}>
+                        <a href="/#" className="text-indigo-600 hover:text-indigo-900" onClick={() => router.push(`dashboard/edit/${product.id}`)}>
                           Edit
                         </a>
                       </td>

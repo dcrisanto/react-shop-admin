@@ -2,11 +2,11 @@
 import ProductsPage from '@pages/ProductsPage';
 
 const Products = () => {
-  return(
+  return (
     <>
       <ProductsPage />
     </>
-  )
+  );
 };
 
 export default Products;

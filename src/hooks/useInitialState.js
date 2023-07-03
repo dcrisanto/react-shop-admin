@@ -10,13 +10,13 @@ const useInitialState = () => {
   const toogleModal = () => {
     setState({
       modalOpen: !state.modalOpen,
-    })
+    });
   };
 
   return {
     state,
     toogleModal,
-  }
+  };
 };
 
 export default useInitialState;

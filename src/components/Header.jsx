@@ -72,7 +72,7 @@ export default function Header() {
                       <div>
                         <Menu.Button className="max-w-xs bg-gray-800 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                           <span className="sr-only">Open user menu</span>
-                          <img className="h-8 w-8 rounded-full" src={userData.imageUrl} alt="" />
+                          <Image className="h-8 w-8 rounded-full" src={userData.imageUrl} alt="" />
                         </Menu.Button>
                       </div>
                       <Transition
@@ -95,7 +95,9 @@ export default function Header() {
                             </Menu.Item>
                           ))} */}
                           <button onClick={() => auth.logout()}>
-                            <a className="block px-4 py-2 text-sm text-gray-700">Sign out</a>
+                            <a href="/login" className="block px-4 py-2 text-sm text-gray-700">
+                              Sign out
+                            </a>
                           </button>
                         </Menu.Items>
                       </Transition>
@@ -129,7 +131,7 @@ export default function Header() {
               <div className="pt-4 pb-3 border-t border-gray-700">
                 <div className="flex items-center px-5">
                   <div className="flex-shrink-0">
-                    <img className="h-10 w-10 rounded-full" src={userData.imageUrl} alt="" />
+                    <Image className="h-10 w-10 rounded-full" src={userData.imageUrl} alt="" />
                   </div>
                   <div className="ml-3">
                     <div className="text-base font-medium leading-none text-white">{userData.name}</div>
