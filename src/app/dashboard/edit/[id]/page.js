@@ -3,10 +3,13 @@ import FormProducts from "@components/FormProducts";
 import React, { useEffect, useState } from 'react';
 import axios from "axios";
 import endPoints from "@services/api";
+import useAlert from "@hooks/useAlert";
+import Alert from "@common/Alert";
 
 const Edit = ({ params }) => {
   const id = params.id;
   const [ product, setProduct ] = useState();
+  const { alert, toogleAlert, setAlert } = useAlert();
 
   useEffect(() => {
     if(!id) return;
@@ -22,10 +25,12 @@ const Edit = ({ params }) => {
     }
   }, [params.id]);
 
-  console.log(id);
-  console.log(product);
-
-  return <FormProducts product={product} />
+  return (
+    <>
+      <Alert alert={alert} handleClose={toogleAlert} />
+      <FormProducts product={product} setAlert={setAlert} />
+    </>
+  )
 };
 
 export default Edit;

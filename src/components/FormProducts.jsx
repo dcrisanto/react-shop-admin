@@ -1,7 +1,9 @@
-import { addProduct } from '@services/api/products';
+import { addProduct, updateProduct } from '@services/api/products';
+import { useRouter } from 'next/navigation';
 import { useRef } from 'react';
 
 const FormProducts = ({ setOpenModal, setAlert, product }) => {
+  const router = useRouter();
   const formRef = useRef(null);
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -13,27 +15,57 @@ const FormProducts = ({ setOpenModal, setAlert, product }) => {
       categoryId: parseInt(formData.get('category')),
       images: [formData.get('images').name],
     };
-    addProduct(data)
-      .then((response) => {
-        setAlert({
-          active: true,
-          message: 'Product added successfully',
-          type: 'success',
-          autoClose: false,
-        });
 
-        setOpenModal({
-          modalOpen: false,
+    if (product) {
+      const updateData = {
+        title: data.title != '' ? data.title : product.title,
+        price: data.price != '' ? data.price : product.price,
+        description: data.description != '' ? data.description : product.description,
+        categoryId: data.categoryId != '' ? data.categoryId : product.categoryId,
+        images: data.images[0] != '' ? data.images : product.images,
+      };
+      updateProduct(product.id, updateData)
+        .then((response) => {
+          setAlert({
+            active: true,
+            message: 'Product update successfully',
+            type: 'success',
+            autoClose: false,
+          });
+
+          router.push('/dashboard/products');
+        })
+        .catch((error) => {
+          setAlert({
+            active: true,
+            message: error.message,
+            type: 'error',
+            autoClose: false,
+          });
         });
-      })
-      .catch((error) => {
-        setAlert({
-          active: true,
-          message: error.message,
-          type: 'error',
-          autoClose: false,
+    } else {
+      addProduct(data)
+        .then((response) => {
+          setAlert({
+            active: true,
+            message: 'Product added successfully',
+            type: 'success',
+            autoClose: false,
+          });
+
+          setOpenModal({
+            modalOpen: false,
+          });
+        })
+        .catch((error) => {
+          setAlert({
+            active: true,
+            message: error.message,
+            type: 'error',
+            autoClose: false,
+          });
         });
-      });
+    }
   };
 
   return (
