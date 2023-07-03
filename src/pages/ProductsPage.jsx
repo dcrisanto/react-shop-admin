@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import { XCircleIcon } from '@heroicons/react/24/solid';
 import endPoints from '@services/api';
 import { PlusIcon } from '@heroicons/react/20/solid';
-import Image from 'next/image';
 import Pagination from '@components/Pagination';
 import usePagination from '@hooks/usePagination';
 import Modal from '@common/Modal';
